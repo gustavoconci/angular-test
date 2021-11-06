@@ -22,8 +22,18 @@ app.config(function ($routeProvider) {
         });
 });
 
-app.controller('DashboardController', function ($scope) {
+app.controller('DashboardController', function ($scope, $http) {
     $scope.title = 'Dashboard';
+
+    $scope.years = [];
+
+    $http.get('movies.json').then(
+        function(data) {
+            console.log(data);
+        }, function(erro) {
+            console.log(erro);
+        }
+    );
 });
 
 app.controller('MoviesController', function ($scope, $http) {
