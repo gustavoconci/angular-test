@@ -13,9 +13,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="item in years | filter:moreThanOne | orderBy:'-count'">
-                            <td>{{item.year}}</td>
-                            <td>{{item.count}}</td>
+                        <tr ng-repeat="year in years | filter:moreThanOne | orderBy:'-count'">
+                            <td>{{year.year}}</td>
+                            <td>{{year.count}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -39,9 +39,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="item in studios | orderBy:'-count'">
-                            <td>{{item.name}}</td>
-                            <td>{{item.count}}</td>
+                        <tr ng-repeat="studio in studios | orderBy:'-count'">
+                            <td>{{studio.name}}</td>
+                            <td>{{studio.count}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -140,7 +140,7 @@
                             <input ng-model="search.year" type="number" class="form-control"
                                 placeholder="Search by year" list="years-datalist">
                             <datalist id="years-datalist">
-                                <option ng-repeat="item in years" value="{{item.year}}"></option>
+                                <option ng-repeat="year in years" value="{{year.year}}"></option>
                             </datalist>
                         </div>
                         <div class="col-auto">

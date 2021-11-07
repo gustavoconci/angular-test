@@ -9,8 +9,24 @@
         $scope.years = [];
         $scope.studios = [];
         $scope.producers = [];
+        $scope.producersLongest = {};
+        $scope.producersShortest = {};
         $scope.movies = [];
         $scope.search = {};
+
+        $scope.moreThanOne = function (item) {
+            return item.count > 1;
+        };
+
+        $scope.searchByYear = function (e) {
+            e.preventDefault();
+
+            $scope.search.result = $scope.movies.filter(function (m) {
+                if (m.year == $scope.search.year) {
+                    return m;
+                }
+            });
+        };
 
         $http.get('movies.json').then(
             function(data) {
@@ -98,21 +114,6 @@
 
                 $scope.producersLongest = producers[0];
                 $scope.producersShortest = producers[producers.length - 1];
-
-                $scope.moreThanOne = function (item) {
-                    return item.count > 1;
-                };
-
-                $scope.searchByYear = function (e) {
-                    e.preventDefault();
-
-                    $scope.search.result = $scope.movies.filter(function (m) {
-                        if (m.year == $scope.search.year) {
-                            return m;
-                        }
-                    });
-                };
-
             }, function(error) {
                 console.error(error);
             }

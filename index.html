@@ -12,6 +12,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-route/1.8.2/angular-route.min.js"></script>
         <script src="app.js"></script>
+        <script src="assets/js/script.js"></script>
     </head>
     <body ng-app="app" class="d-flex flex-column">
         <header class="p-3 bg-dark text-white">
@@ -21,7 +22,7 @@
         </header>
 
         <main class="main" ng-controller="MainController">
-            <div class="navbar-aside p-3 text-dark bg-light">
+            <div class="navbar-aside text-dark bg-light">
                 <ul class="nav nav-pills flex-column mb-auto">
                     <li>
                         <a href="#!/" class="nav-link {{ $route.current.scope.id === 'dashboard' ? 'active' : '' }}">

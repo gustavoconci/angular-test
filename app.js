@@ -33,8 +33,24 @@ var app = angular.module('app', [
         $scope.years = [];
         $scope.studios = [];
         $scope.producers = [];
+        $scope.producersLongest = {};
+        $scope.producersShortest = {};
         $scope.movies = [];
         $scope.search = {};
+
+        $scope.moreThanOne = function (item) {
+            return item.count > 1;
+        };
+
+        $scope.searchByYear = function (e) {
+            e.preventDefault();
+
+            $scope.search.result = $scope.movies.filter(function (m) {
+                if (m.year == $scope.search.year) {
+                    return m;
+                }
+            });
+        };
 
         $http.get('movies.json').then(
             function(data) {
@@ -122,21 +138,6 @@ var app = angular.module('app', [
 
                 $scope.producersLongest = producers[0];
                 $scope.producersShortest = producers[producers.length - 1];
-
-                $scope.moreThanOne = function (item) {
-                    return item.count > 1;
-                };
-
-                $scope.searchByYear = function (e) {
-                    e.preventDefault();
-
-                    $scope.search.result = $scope.movies.filter(function (m) {
-                        if (m.year == $scope.search.year) {
-                            return m;
-                        }
-                    });
-                };
-
             }, function(error) {
                 console.error(error);
             }
@@ -158,6 +159,41 @@ var app = angular.module('app', [
     'use strict';
 
     app.controller('MoviesController', function ($scope, $http) {
+        var movies = [];
+
         $scope.id = 'movies';
+
+        $scope.filter = {};
+        $scope.filterBy = function () {
+            $scope.movies = movies;
+
+            if (typeof $scope.filter.year !== typeof undefined && $scope.filter.year) {
+                $scope.filter.year = $scope.filter.year.replace(/\D/g, '');
+
+                $scope.movies = $scope.movies.filter(function (m) {
+                    if (m.year.toString().indexOf($scope.filter.year) >= 0) {
+                        return m;
+                    }
+                });
+            }
+            
+            if (typeof $scope.filter.winner !== typeof undefined && $scope.filter.winner) {
+                $scope.movies = $scope.movies.filter(function (m) {
+                    if (m.winner == $scope.filter.winner) {
+                        return m;
+                    }
+                });
+            }
+        };
+
+        $http.get('movies.json').then(
+            function(data) {
+                movies = data.data;
+                $scope.movies = movies;
+
+            }, function(error) {
+                console.error(error);
+            }
+        );
     });
 })(app);

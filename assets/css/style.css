@@ -26,6 +26,9 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: bold;
 }
 
+.navbar-aside {
+    padding: 1rem;
+}
 @media (min-width: 768px) {
     .navbar-aside {
         flex: 0 0 200px;
@@ -41,4 +44,11 @@ h1, h2, h3, h4, h5, h6 {
 
 .card {
     height: 100%;
+}
+
+th {
+    vertical-align: middle;
+}
+th .form-control {
+    margin-top: 0.5rem;
 }

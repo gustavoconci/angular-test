@@ -1,1 +1,26 @@
-movies
+<table class="table table-bordered mb-0">
+    <thead class="table-dark">
+        <tr>
+            <th class="w-25">
+                Year
+                <input ng-model="filter.year" ng-change="filterBy()" type="tel" class="form-control" maxlength="4" data-mask="number" placeholder="Search by year">
+            </th>
+            <th class="w-50">Title</th>
+            <th class="w-50">
+                Winner
+                <select ng-model="filter.winner" ng-change="filterBy()" class="form-control">
+                    <option value="">Yes/No</option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="movie in movies">
+            <td>{{movie.year}}</td>
+            <td>{{movie.title}}</td>
+            <td>{{movie.winner ? 'Yes' : 'No'}}</td>
+        </tr>
+    </tbody>
+</table>
