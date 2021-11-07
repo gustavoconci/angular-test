@@ -3,7 +3,10 @@
         <tr>
             <th class="w-25">
                 Year
-                <input ng-model="filter.year" ng-change="filterBy()" type="tel" class="form-control" maxlength="4" data-mask="number" placeholder="Search by year">
+                <select ng-model="filter.year" ng-change="filterBy()" class="form-control">
+                    <option value="">Search by year</option>
+                    <option ng-repeat="year in years" value="{{year.year}}">{{year.year}}</option>
+                </select>
             </th>
             <th class="w-50">Title</th>
             <th class="w-50">
@@ -34,7 +37,7 @@
                         <a class="page-link" href="#!/movies/page/{{page-1}}">&lt;</a>
                     </li>
                     <li ng-repeat="pager in pagination" class="page-item {{pager == page ? 'active' : ''}}">
-                        <a class="page-link" href="#!/movies/page/{{pager}}" ng-click="">{{pager}}</a>
+                        <a class="page-link" href="#!/movies/page/{{pager}}{{paginationParams}}" ng-click="">{{pager}}</a>
                     </li>
                     <li class="page-item" ng-if="page < pagination.length">
                         <a class="page-link" href="#!/movies/page/{{page+1}}">&gt;</a>

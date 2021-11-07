@@ -3,12 +3,16 @@
 (function(app) {
     'use strict';
 
-    app.controller('MoviesController', function ($scope, $http, $routeParams) {
+    app.controller('MoviesController', function ($scope, $http, $routeParams, $route) {
         var movies = [];
 
         $scope.id = 'movies';
 
-        $scope.filter = {};
+        $scope.movies = [];
+        $scope.years = [];
+
+        $scope.filter = Object.assign({}, $routeParams);
+        delete $scope.filter.pager;
 
         $scope.page = Number($routeParams.pager) || 1;
         $scope.pageSize = 15;
@@ -20,10 +24,11 @@
             return array.slice((page_number - 1) * $scope.pageSize, page_number * $scope.pageSize);
         };
         $scope.pagination = [];
+        $scope.paginationParams = '';
 
         var loadPagination = function () {
             var pagers = [],
-                limit = Math.ceil(movies.length / $scope.pageSize);
+                limit = Math.ceil($scope.movies.length / $scope.pageSize);
 
             for (var i = 1; i <= limit; i++) {
                 pagers.push(i);
@@ -33,13 +38,14 @@
         };
 
         $scope.filterBy = function () {
+            var paginationParams = Object.assign({}, $routeParams);
+            delete paginationParams.pager;
+
             $scope.movies = movies;
 
             if (typeof $scope.filter.year !== typeof undefined && $scope.filter.year) {
-                $scope.filter.year = $scope.filter.year.replace(/\D/g, '');
-
                 $scope.movies = $scope.movies.filter(function (m) {
-                    if (m.year.toString().indexOf($scope.filter.year) >= 0) {
+                    if (m.year == $scope.filter.year) {
                         return m;
                     }
                 });
@@ -52,14 +58,38 @@
                     }
                 });
             }
+
+            if (JSON.stringify(paginationParams) !== JSON.stringify($scope.filter)) {
+                $route.updateParams(Object.assign({ pager: 1 }, $scope.filter));
+            }
+
+            $scope.paginationParams = '?' + (new URLSearchParams($scope.filter).toString());
+
+            loadPagination();
         };
 
         $http.get('movies.json').then(
             function(data) {
-                movies = data.data;
-                $scope.movies = movies;
+                var years = [];
 
-                loadPagination();
+                movies = data.data;
+
+                movies.forEach(function (movie) {
+                    if (typeof years.find(function (m) {
+                        if (m.year === movie.year) {
+                            return m;
+                        }
+                    }) === typeof undefined) {
+                        years.push({
+                            year: movie.year
+                        });
+                    }
+                });
+                
+                $scope.movies = movies;
+                $scope.years = years;
+
+                $scope.filterBy();
 
             }, function(error) {
                 console.error(error);
