@@ -33,6 +33,8 @@ var app = angular.module('app', [
         $scope.years = [];
         $scope.studios = [];
         $scope.producers = [];
+        $scope.movies = [];
+        $scope.search = {};
 
         $http.get('movies.json').then(
             function(data) {
@@ -77,7 +79,7 @@ var app = angular.module('app', [
                     if (typeof producers.find(function (p) {
                         if (movie.producers.indexOf(p.name) >= 0) {
                             p.interval = Number(movie.year) - Number(p.yearFirst); // revision
-                            p.yearLast = movie.year
+                            p.yearLast = movie.year;
 
                             return p;
                         }
@@ -93,16 +95,14 @@ var app = angular.module('app', [
                     }
                 };
 
-                movies.forEach(function (movie) {
-                    if (movie.winner !== 'yes') {
-                        return;
+                $scope.movies = movies.filter(function (movie) {
+                    if (movie.winner !== false) {
+                        yearWinnerCount(movie);
+                        studioWinnerCount(movie);
+                        producerWinnerInterval(movie);
+
+                        return movie;
                     }
-
-                    yearWinnerCount(movie);
-
-                    studioWinnerCount(movie);
-
-                    producerWinnerInterval(movie);
                 });
 
                 producers = producers.filter(function (p) {
@@ -114,11 +114,7 @@ var app = angular.module('app', [
                     return (a.interval < b.interval) - (a.interval > b.interval);
                 });
 
-                $scope.years = years.filter(function (m) {
-                    if (m.count > 1) {
-                        return m;
-                    }
-                });
+                $scope.years = years;
 
                 $scope.studios = studios.sort(function (a, b) {
                     return (a.count < b.count) - (a.count > b.count);
@@ -126,6 +122,20 @@ var app = angular.module('app', [
 
                 $scope.producersLongest = producers[0];
                 $scope.producersShortest = producers[producers.length - 1];
+
+                $scope.moreThanOne = function (item) {
+                    return item.count > 1;
+                };
+
+                $scope.searchByYear = function (e) {
+                    e.preventDefault();
+
+                    $scope.search.result = $scope.movies.filter(function (m) {
+                        if (m.year == $scope.search.year) {
+                            return m;
+                        }
+                    });
+                };
 
             }, function(error) {
                 console.error(error);

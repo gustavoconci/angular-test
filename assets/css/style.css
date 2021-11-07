@@ -2,8 +2,23 @@ body {
     height: 100vh;
 }
 
-main {
+.main {
     flex-grow: 1;
+}
+@media (min-width: 768px) {
+    .main {
+        display: flex;
+    }
+}
+
+.view {
+    flex-grow: 1;
+    padding: 1rem;
+}
+@media (min-width: 992px) {
+    .view {
+        padding: 3rem;
+    }
 }
 
 .h1, .h2, .h3, .h4, .h5, .h6,
@@ -11,6 +26,19 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: bold;
 }
 
-.navbar-aside {
-    width: 300px;
+@media (min-width: 768px) {
+    .navbar-aside {
+        flex: 0 0 200px;
+        width: 200px;
+    }
+}
+@media (min-width: 992px) {
+    .navbar-aside {
+        flex: 0 0 300px;
+        width: 300px;
+    }
+}
+
+.card {
+    height: 100%;
 }

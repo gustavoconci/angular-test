@@ -2,8 +2,21 @@ body {
     height: 100vh;
 }
 
-main {
+.main {
     flex-grow: 1;
+
+    @media (min-width: 768px) {
+        display: flex;
+    }
+}
+
+.view {
+    flex-grow: 1;
+    padding: 1rem;
+
+    @media (min-width: 992px) {
+        padding: 3rem;
+    }
 }
 
 .h1, .h2, .h3, .h4, .h5, .h6,

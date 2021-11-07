@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Frontend Angular Test</title>
 
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
         <link rel="stylesheet" href="assets/css/style.css">
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
@@ -20,7 +20,7 @@
             </a>
         </header>
 
-        <main class="d-flex" ng-controller="MainController">
+        <main class="main" ng-controller="MainController">
             <div class="navbar-aside p-3 text-dark bg-light">
                 <ul class="nav nav-pills flex-column mb-auto">
                     <li>
@@ -36,7 +36,7 @@
                 </ul>
             </div>
 
-            <div ng-view class="flex-grow-1 p-5">
+            <div ng-view class="view">
             </div>
         </main>
     </body>
