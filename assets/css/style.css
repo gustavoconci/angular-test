@@ -5,7 +5,7 @@ body {
 .main {
     flex-grow: 1;
 }
-@media (min-width: 768px) {
+@media (min-width: 992px) {
     .main {
         display: flex;
     }
@@ -28,12 +28,6 @@ h1, h2, h3, h4, h5, h6 {
 
 .navbar-aside {
     padding: 1rem;
-}
-@media (min-width: 768px) {
-    .navbar-aside {
-        flex: 0 0 200px;
-        width: 200px;
-    }
 }
 @media (min-width: 992px) {
     .navbar-aside {
