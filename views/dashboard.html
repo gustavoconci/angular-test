@@ -1,0 +1,116 @@
+<div class="row">
+    <div class="col-6">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h2 class="h4 mb-3">
+                    List years with multiple winners
+                </h2>
+                <table ng-if="years.length" class="table table-bordered table-striped mb-0">
+                    <thead>
+                        <tr>
+                            <th class="w-50">Year</th>
+                            <th>Win Count</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in years | orderBy:'-count'">
+                            <td>{{item.year}}</td>
+                            <td>{{item.count}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div ng-if="!years.length" class="text-center p-3">
+                    Loading...
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h2 class="h4 mb-3">
+                    Top 3 studios with winners
+                </h2>
+                <table ng-if="studios.length" class="table table-bordered table-striped mb-0">
+                    <thead>
+                        <tr>
+                            <th class="w-50">Name</th>
+                            <th>Win Count</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in studios | orderBy:'-count'">
+                            <td>{{item.name}}</td>
+                            <td>{{item.count}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div ng-if="!studios.length" class="text-center p-3">
+                    Loading...
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h2 class="h4 mb-3">
+                    Producers with longest and shortest interval between wins
+                </h2>
+
+                <h3 class="h5">
+                    Maximum
+                </h3>
+                <table class="table table-bordered mb-2">
+                    <thead>
+                        <tr>
+                            <th class="w-25">Producer</th>
+                            <th>Interval</th>
+                            <th>Previous Year</th>
+                            <th>Following Year</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{producersLongest.name}}</td>
+                            <td>{{producersLongest.interval}}</td>
+                            <td>{{producersLongest.yearFirst}}</td>
+                            <td>{{producersLongest.yearLast}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 class="h5">
+                    Minimum
+                </h3>
+                <table class="table table-bordered mb-2">
+                    <thead>
+                        <tr>
+                            <th class="w-25">Producer</th>
+                            <th>Interval</th>
+                            <th>Previous Year</th>
+                            <th>Following Year</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{producersShortest.name}}</td>
+                            <td>{{producersShortest.interval}}</td>
+                            <td>{{producersShortest.yearFirst}}</td>
+                            <td>{{producersShortest.yearLast}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h2 class="h3 mb-3">
+                    Movie Winners by Year
+                </h2>
+            </div>
+        </div>
+    </div>
+</div>

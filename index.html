@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Teste</title>
+        <title>Frontend Angular Test</title>
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/css/bootstrap.min.css">
         <link rel="stylesheet" href="assets/css/style.css">
@@ -16,28 +16,27 @@
     <body ng-app="app" class="d-flex flex-column">
         <header class="p-3 bg-dark text-white">
             <a href="#!/" class=" text-white text-decoration-none">
-              <span class="fs-4">Simple header</span>
+                Frontend Angular Test
             </a>
         </header>
 
-        <main class="d-flex">
-            <div class="d-flex flex-column flex-shrink-0 p-3 text-dark bg-light" style="width: 280px;">
+        <main class="d-flex" ng-controller="MainController">
+            <div class="navbar-aside p-3 text-dark bg-light">
                 <ul class="nav nav-pills flex-column mb-auto">
-                <li>
-                    <a href="#!/" class="nav-link text-dark">
-                        Dashboard
-                    </a>
-                </li>
-                <li>
-                    <a href="#!/movies" class="nav-link text-dark">
-                        Orders
-                    </a>
-                </li>
+                    <li>
+                        <a href="#!/" class="nav-link {{ $route.current.scope.id === 'dashboard' ? 'active' : '' }}">
+                            Dashboard
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#!/movies" class="nav-link {{ $route.current.scope.id === 'movies' ? 'active' : '' }}">
+                            Movies
+                        </a>
+                    </li>
                 </ul>
             </div>
 
-            <div class="flex-grow-1 p-5">
-                <ng-view></ng-view>
+            <div ng-view class="flex-grow-1 p-5">
             </div>
         </main>
     </body>
