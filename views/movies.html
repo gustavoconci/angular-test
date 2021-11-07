@@ -17,10 +17,33 @@
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="movie in movies">
+        <tr ng-repeat="movie in paginate(movies, page)">
             <td>{{movie.year}}</td>
             <td>{{movie.title}}</td>
             <td>{{movie.winner ? 'Yes' : 'No'}}</td>
         </tr>
     </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3">
+                <ul class="pagination mb-0">
+                    <li class="page-item" ng-if="page-1 > 0">
+                        <a class="page-link" href="#!/movies/page/1">&laquo;</a>
+                    </li>
+                    <li class="page-item" ng-if="page-1 > 0">
+                        <a class="page-link" href="#!/movies/page/{{page-1}}">&lt;</a>
+                    </li>
+                    <li ng-repeat="pager in pagination" class="page-item {{pager == page ? 'active' : ''}}">
+                        <a class="page-link" href="#!/movies/page/{{pager}}" ng-click="">{{pager}}</a>
+                    </li>
+                    <li class="page-item" ng-if="page < pagination.length">
+                        <a class="page-link" href="#!/movies/page/{{page+1}}">&gt;</a>
+                    </li>
+                    <li class="page-item" ng-if="page < pagination.length">
+                        <a class="page-link" href="#!/movies/page/{{pagination.length}}">&raquo;</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    </tfoot>
 </table>

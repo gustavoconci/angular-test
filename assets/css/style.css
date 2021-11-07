@@ -46,3 +46,7 @@ th {
 th .form-control {
     margin-top: 0.5rem;
 }
+
+.pagination {
+    justify-content: center;
+}

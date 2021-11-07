@@ -17,6 +17,10 @@ var app = angular.module('app', [
                 templateUrl: 'views/movies.html',
                 controller: 'MoviesController'
             })
+            .when('/movies/page/:pager', {
+                templateUrl: 'views/movies.html',
+                controller: 'MoviesController'
+            })
             .otherwise({
                 redirectTo: '/'
             });
