@@ -11,6 +11,7 @@ const concat = require('gulp-concat');
 const sass = require('gulp-sass')(require('sass'));
 const uglify = require('gulp-uglify');
 const eslint = require('gulp-eslint');
+const babel = require('gulp-babel');
 
 const browserSync = require('browser-sync').create();
 
@@ -57,6 +58,9 @@ var assets = {
                 assetsPathSrc + 'js/**/*.js',
             ])
             .pipe(eslint())
+            .pipe(babel({
+                presets: ['@babel/preset-env']
+            }))
             .pipe(concat('script.js'))
             .pipe(gulp.dest(assetsPathDest + 'js/'))
             .pipe(eslint.format())
@@ -72,6 +76,9 @@ var app = {
                 appPathSrc + '**/*.js',
             ])
             .pipe(eslint())
+            .pipe(babel({
+                presets: ['@babel/preset-env']
+            }))
             .pipe(concat('app.js'))
             .pipe(gulp.dest(pathDest))
             .pipe(eslint.format())

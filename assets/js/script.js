@@ -1,19 +1,20 @@
+"use strict";
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 (function (w) {
-    'use strict';
-
-    var masks = {
-        number: function (e) {
-            return e.target.value.replace(/\D/g, '');
-        }
+  var masks = {
+    number: function number(e) {
+      return e.target.value.replace(/\D/g, '');
     }
+  };
+  w.addEventListener('load', function () {
+    document.addEventListener('input', function (e) {
+      var dataset = e.target.dataset;
 
-    w.addEventListener('load', function(event) {
-        document.addEventListener('input', function (e) {
-            var dataset = e.target.dataset;
-
-            if (typeof dataset.mask !== typeof undefined) {
-                e.target.value = masks[dataset.mask](e);
-            }
-        }, false);
-    });
+      if (_typeof(dataset.mask) !== (typeof undefined === "undefined" ? "undefined" : _typeof(undefined))) {
+        e.target.value = masks[dataset.mask](e);
+      }
+    }, false);
+  });
 })(window);

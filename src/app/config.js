@@ -1,13 +1,11 @@
 /* global angular */
 
-var app = angular.module('app', [
+const app = angular.module('app', [
     'ngRoute'
 ]);
 
-(function(app) {
-    'use strict';
-
-    app.config(function ($routeProvider) {
+((app) => {
+    app.config(($routeProvider) =>
         $routeProvider
             .when('/', {
                 templateUrl: 'views/dashboard.html',
@@ -23,6 +21,6 @@ var app = angular.module('app', [
             })
             .otherwise({
                 redirectTo: '/'
-            });
-    });
+            })
+    );
 })(app);

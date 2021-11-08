@@ -140,7 +140,9 @@
                             <input ng-model="search.year" type="number" class="form-control"
                                 placeholder="Search by year" list="years-datalist">
                             <datalist id="years-datalist">
-                                <option ng-repeat="year in years" value="{{year.year}}"></option>
+                                <option ng-repeat="year in years" value="{{year.year}}">
+                                    {{year.count}} movie winners
+                                </option>
                             </datalist>
                         </div>
                         <div class="col-auto">

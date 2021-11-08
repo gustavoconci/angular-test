@@ -32,6 +32,9 @@
   "author": "Gustavo H. Conci",
   "license": "ISC",
   "devDependencies": {
+    "@babel/core": "^7.16.0",
+    "@babel/preset-env": "^7.16.0",
+    "gulp-babel": "^8.0.0",
     "gulp.spritesmith": "^6.11.0"
   }
 }

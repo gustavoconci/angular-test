@@ -1,9 +1,7 @@
 /* global app */
 
-(function(app) {
-    'use strict';
-
-    app.controller('DashboardController', function ($scope, $route, $http) {
+((app) => {
+    app.controller('DashboardController', ($scope, $route, $http) => {
         $scope.id = 'dashboard';
 
         $scope.years = [];
@@ -14,109 +12,92 @@
         $scope.movies = [];
         $scope.search = {};
 
-        $scope.moreThanOne = function (item) {
-            return item.count > 1;
-        };
+        $scope.moreThanOne = (item) => item.count > 1;
 
-        $scope.searchByYear = function (e) {
+        $scope.searchByYear = (e) => {
             e.preventDefault();
 
-            $scope.search.result = $scope.movies.filter(function (m) {
-                if (m.year == $scope.search.year) {
-                    return m;
-                }
-            });
+            $scope.search.result = $scope.movies.filter((m) => m.year == $scope.search.year);
         };
 
-        $http.get('movies.json').then(
-            function(data) {
-                var movies = data.data,
-                    years = [],
-                    studios = [],
-                    producers = [];
+        $http.get('movies.json').then((data) => {
+            const movies = data.data;
+            const years = [];
+            const studios = [];
 
-                var yearWinnerCount = function (movie) {
-                    if (typeof years.find(function (m) {
-                        if (m.year === movie.year) {
-                            m.count += 1;
+            let producers = [];
 
-                            return m;
-                        }
-                    }) === typeof undefined) {
-                        years.push({
-                            year: movie.year,
+            const yearWinnerCount = (movie) => {
+                if (typeof years.find((m) => {
+                    if (m.year === movie.year) {
+                        m.count += 1;
+
+                        return m;
+                    }
+                }) === typeof undefined) {
+                    years.push({
+                        year: movie.year,
+                        count: 1
+                    });
+                }
+            };
+
+            const studioWinnerCount = (movie) => {
+                if (typeof studios.find((s) => {
+                    if (movie.studios.indexOf(s.name) >= 0) {
+                        s.count += 1;
+
+                        return s;
+                    }
+                }) === typeof undefined) {
+                    movie.studios.split(',').forEach((studio) => {
+                        studios.push({
+                            name: studio.trim(),
                             count: 1
                         });
-                    }
-                };
+                    });
+                }
+            };
 
-                var studioWinnerCount = function (movie) {
-                    if (typeof studios.find(function (s) {
-                        if (movie.studios.indexOf(s.name) >= 0) {
-                            s.count += 1;
+            const producerWinnerInterval = (movie) => {
+                if (typeof producers.find((p) => {
+                    if (movie.producers.indexOf(p.name) >= 0) {
+                        p.interval = Number(movie.year) - Number(p.yearFirst); // revision
+                        p.yearLast = movie.year;
 
-                            return s;
-                        }
-                    }) === typeof undefined) {
-                        movie.studios.split(',').forEach(function (studio) {
-                            studios.push({
-                                name: studio.trim(),
-                                count: 1
-                            });
-                        });
-                    }
-                };
-
-                var producerWinnerInterval = function (movie) {
-                    if (typeof producers.find(function (p) {
-                        if (movie.producers.indexOf(p.name) >= 0) {
-                            p.interval = Number(movie.year) - Number(p.yearFirst); // revision
-                            p.yearLast = movie.year;
-
-                            return p;
-                        }
-                    }) === typeof undefined) {
-                        movie.producers.split(',').forEach(function (producer) {
-                            producers.push({
-                                name: producer.trim(),
-                                interval: 0,
-                                yearFirst: movie.year,
-                                yearLast: movie.year
-                            });
-                        });
-                    }
-                };
-
-                $scope.movies = movies.filter(function (movie) {
-                    if (movie.winner !== false) {
-                        yearWinnerCount(movie);
-                        studioWinnerCount(movie);
-                        producerWinnerInterval(movie);
-
-                        return movie;
-                    }
-                });
-
-                producers = producers.filter(function (p) {
-                    if (p.interval > 0) {
                         return p;
                     }
-                });
-                producers.sort(function (a, b) {
-                    return (a.interval < b.interval) - (a.interval > b.interval);
-                });
+                }) === typeof undefined) {
+                    movie.producers.split(',').forEach((producer) => {
+                        producers.push({
+                            name: producer.trim(),
+                            interval: 0,
+                            yearFirst: movie.year,
+                            yearLast: movie.year
+                        });
+                    });
+                }
+            };
 
-                $scope.years = years;
+            $scope.movies = movies.filter((movie) => {
+                if (movie.winner !== false) {
+                    yearWinnerCount(movie);
+                    studioWinnerCount(movie);
+                    producerWinnerInterval(movie);
 
-                $scope.studios = studios.sort(function (a, b) {
-                    return (a.count < b.count) - (a.count > b.count);
-                }).slice(0, 3);
+                    return movie;
+                }
+            });
 
-                $scope.producersLongest = producers[0];
-                $scope.producersShortest = producers[producers.length - 1];
-            }, function(error) {
-                console.error(error);
-            }
-        );
+            producers = producers.filter((p) => (p.interval > 0));
+            producers.sort((a, b) => (a.interval < b.interval) - (a.interval > b.interval));
+
+            $scope.years = years;
+
+            $scope.studios = studios.sort((a, b) => (a.count < b.count) - (a.count > b.count)).slice(0, 3);
+
+            $scope.producersLongest = producers[0];
+            $scope.producersShortest = producers[producers.length - 1];
+        }, (error) => console.error(error));
     });
 })(app);

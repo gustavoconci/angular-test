@@ -1,15 +1,11 @@
-(function (w) {
-    'use strict';
+((w) => {
+    const masks = {
+        number: (e) => e.target.value.replace(/\D/g, '')
+    };
 
-    var masks = {
-        number: function (e) {
-            return e.target.value.replace(/\D/g, '');
-        }
-    }
-
-    w.addEventListener('load', function(event) {
-        document.addEventListener('input', function (e) {
-            var dataset = e.target.dataset;
+    w.addEventListener('load', () => {
+        document.addEventListener('input', (e) => {
+            const dataset = e.target.dataset;
 
             if (typeof dataset.mask !== typeof undefined) {
                 e.target.value = masks[dataset.mask](e);
