@@ -202,21 +202,15 @@ var app = angular.module('app', [
 
             $scope.movies = movies;
 
-            if (typeof $scope.filter.year !== typeof undefined && $scope.filter.year) {
-                $scope.movies = $scope.movies.filter(function (m) {
-                    if (m.year == $scope.filter.year) {
-                        return m;
-                    }
-                });
-            }
-            
-            if (typeof $scope.filter.winner !== typeof undefined && $scope.filter.winner) {
-                $scope.movies = $scope.movies.filter(function (m) {
-                    if (m.winner == $scope.filter.winner) {
-                        return m;
-                    }
-                });
-            }
+            Object.keys($scope.filter).forEach(function (filter) {
+                if (typeof $scope.filter[filter] !== typeof undefined && $scope.filter[filter]) {
+                    $scope.movies = $scope.movies.filter(function (m) {
+                        if (m[filter] == $scope.filter[filter]) {
+                            return m;
+                        }
+                    });
+                }
+            });
 
             if (JSON.stringify(paginationParams) !== JSON.stringify($scope.filter)) {
                 $route.updateParams(Object.assign({ pager: 1 }, $scope.filter));

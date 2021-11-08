@@ -31,19 +31,19 @@
             <td colspan="3">
                 <ul class="pagination mb-0">
                     <li class="page-item" ng-if="page-1 > 0">
-                        <a class="page-link" href="#!/movies/page/1">&laquo;</a>
+                        <a class="page-link" href="#!/movies/page/1{{paginationParams}}">&laquo;</a>
                     </li>
                     <li class="page-item" ng-if="page-1 > 0">
-                        <a class="page-link" href="#!/movies/page/{{page-1}}">&lt;</a>
+                        <a class="page-link" href="#!/movies/page/{{page-1}}{{paginationParams}}">&lt;</a>
                     </li>
                     <li ng-repeat="pager in pagination" class="page-item {{pager == page ? 'active' : ''}}">
                         <a class="page-link" href="#!/movies/page/{{pager}}{{paginationParams}}" ng-click="">{{pager}}</a>
                     </li>
                     <li class="page-item" ng-if="page < pagination.length">
-                        <a class="page-link" href="#!/movies/page/{{page+1}}">&gt;</a>
+                        <a class="page-link" href="#!/movies/page/{{page+1}}{{paginationParams}}">&gt;</a>
                     </li>
                     <li class="page-item" ng-if="page < pagination.length">
-                        <a class="page-link" href="#!/movies/page/{{pagination.length}}">&raquo;</a>
+                        <a class="page-link" href="#!/movies/page/{{pagination.length}}{{paginationParams}}">&raquo;</a>
                     </li>
                 </ul>
             </td>
