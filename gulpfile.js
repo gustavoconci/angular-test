@@ -28,11 +28,6 @@ const browserSyncParams = {
     notify: false
 };
 
-// Clean assets
-function clean() {
-    return del([ assetsPathSrc ]);
-}
-
 // Assets tasks
 var assets = {
     css: function () {
@@ -102,11 +97,10 @@ function watchFiles() {
 
 // define complex tasks
 const assetsBuild = gulp.parallel(assets.css, assets.js);
-const build = gulp.series(clean, app.js, assetsBuild);
+const build = gulp.series(app.js, assetsBuild);
 const watch = gulp.series(app.js, assetsBuild, watchFiles);
 
 // export tasks
-exports.clean = clean;
 exports.build = build;
 exports.watch = watch;
 exports.default = build;
