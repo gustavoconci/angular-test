@@ -13,7 +13,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="year in years | filter:moreThanOne | orderBy:'-count'">
+                        <tr ng-repeat="year in years | orderBy:'-count'">
                             <td>{{year.year}}</td>
                             <td>{{year.count}}</td>
                         </tr>
