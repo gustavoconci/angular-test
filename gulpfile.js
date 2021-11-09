@@ -2,14 +2,11 @@
 
 // Load plugins
 const autoprefixer = require('autoprefixer');
-const cssnano = require('cssnano');
-const del = require('del');
 const gulp = require('gulp');
 const plumber = require('gulp-plumber');
 const postcss = require('gulp-postcss');
 const concat = require('gulp-concat');
 const sass = require('gulp-sass')(require('sass'));
-const uglify = require('gulp-uglify');
 const eslint = require('gulp-eslint');
 const babel = require('gulp-babel');
 
