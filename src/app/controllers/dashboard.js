@@ -1,117 +1,117 @@
 /* global app */
 
 ((app) => {
-    const years = [];
-    const studios = [];
-
-    let producers = [];
-
-    /**
-     * Counts years with more winners.
-     * @param {Object} movie 
-     */
-    const yearWinnerCount = (movie) => {
-        /**
-         * Checks the year exists in array and count the winners.
-         * @param {Object} year 
-         * @returns year
-         */
-        const findYear = (year) => {
-            if (year.year === movie.year) {
-                year.count += 1;
-
-                return year;
-            }
-        };
-
-        if (typeof years.find(findYear) === typeof undefined) {
-            years.push({
-                year: movie.year,
-                count: 1
-            });
-        }
-    };
-
-    /**
-     * Counts studios with more winners.
-     * @param {Object} movie 
-     */
-    const studioWinnerCount = (movie) => {
-        /**
-         * Checks the studio exists in array and count the winners.
-         * @param {Object} studio 
-         * @returns studio
-         */
-        const findStudio = (studio) => {
-            if (movie.studios.indexOf(studio.name) >= 0) {
-                studio.count += 1;
-
-                return studio;
-            }
-        };
-
-        /**
-         * Adds the studio in array.
-         * @param {String} studio 
-         */
-        const eachStudio = (studio) => {
-            studios.push({
-                name: studio.trim(),
-                count: 1
-            });
-        };
-
-        if (typeof studios.find(findStudio) === typeof undefined) {
-            if (typeof movie.studios === 'string') {
-                movie.studios.split(',').forEach(eachStudio);
-            } else {
-                movie.studios.forEach(eachStudio);
-            }
-        }
-    };
-
-    /**
-     * Calculates each producer's winning interval.
-     * @param {Object} movie 
-     */
-    const producerWinnerInterval = (movie) => {
-        /**
-         * Checks the producer exists in array, calculates the interval and defines the last year.
-         * @param {Object} producer 
-         * @returns producer
-         */
-        const findProducer = (producer) => {
-            if (movie.producers.indexOf(producer.name) >= 0) {
-                producer.interval = Number(movie.year) - Number(producer.yearFirst);
-                producer.yearLast = movie.year;
-
-                return producer;
-            }
-        };
-
-        /**
-         * Adds the producer in array.
-         * @param {String} producer 
-         */
-        const eachProducer = (producer) => {
-            producers.push({
-                name: producer.trim(),
-                interval: 0,
-                yearFirst: movie.year,
-                yearLast: movie.year
-            });
-        };
-
-        if (typeof producers.find(findProducer) === typeof undefined) {
-            if (typeof movie.producers === 'string') {
-                movie.producers.split(',').forEach(eachProducer);
-            } else {
-                movie.producers.forEach(eachProducer);
-            }
-        }
-    };
-
     app.controller('DashboardController', ($scope, $route, $http) => {
+        const years = [];
+        const studios = [];
+    
+        let producers = [];
+
+        /**
+         * Counts years with more winners.
+         * @param {Object} movie 
+         */
+        const yearWinnerCount = (movie) => {
+            /**
+             * Checks the year exists in array and count the winners.
+             * @param {Object} year 
+             * @returns year
+             */
+            const findYear = (year) => {
+                if (year.year === movie.year) {
+                    year.count += 1;
+    
+                    return year;
+                }
+            };
+    
+            if (typeof years.find(findYear) === typeof undefined) {
+                years.push({
+                    year: movie.year,
+                    count: 1
+                });
+            }
+        };
+    
+        /**
+         * Counts studios with more winners.
+         * @param {Object} movie 
+         */
+        const studioWinnerCount = (movie) => {
+            /**
+             * Checks the studio exists in array and count the winners.
+             * @param {Object} studio 
+             * @returns studio
+             */
+            const findStudio = (studio) => {
+                if (movie.studios.indexOf(studio.name) >= 0) {
+                    studio.count += 1;
+    
+                    return studio;
+                }
+            };
+    
+            /**
+             * Adds the studio in array.
+             * @param {String} studio 
+             */
+            const eachStudio = (studio) => {
+                studios.push({
+                    name: studio.trim(),
+                    count: 1
+                });
+            };
+    
+            if (typeof studios.find(findStudio) === typeof undefined) {
+                if (typeof movie.studios === 'string') {
+                    movie.studios.split(',').forEach(eachStudio);
+                } else {
+                    movie.studios.forEach(eachStudio);
+                }
+            }
+        };
+    
+        /**
+         * Calculates each producer's winning interval.
+         * @param {Object} movie 
+         */
+        const producerWinnerInterval = (movie) => {
+            /**
+             * Checks the producer exists in array, calculates the interval and defines the last year.
+             * @param {Object} producer 
+             * @returns producer
+             */
+            const findProducer = (producer) => {
+                if (movie.producers.indexOf(producer.name) >= 0) {
+                    producer.interval = Number(movie.year) - Number(producer.yearFirst);
+                    producer.yearLast = movie.year;
+    
+                    return producer;
+                }
+            };
+    
+            /**
+             * Adds the producer in array.
+             * @param {String} producer 
+             */
+            const eachProducer = (producer) => {
+                producers.push({
+                    name: producer.trim(),
+                    interval: 0,
+                    yearFirst: movie.year,
+                    yearLast: movie.year
+                });
+            };
+    
+            if (typeof producers.find(findProducer) === typeof undefined) {
+                if (typeof movie.producers === 'string') {
+                    movie.producers.split(',').forEach(eachProducer);
+                } else {
+                    movie.producers.forEach(eachProducer);
+                }
+            }
+        };
+
         /**
          * Searchs movies by year.
          * @param {Event} e 

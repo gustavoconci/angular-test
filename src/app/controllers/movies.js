@@ -1,11 +1,11 @@
 /* global app */
 
 ((app) => {
-    const years = [];
-
-    let movies = [];
-
     app.controller('MoviesController', ($scope, $http, $routeParams, $route) => {
+        const years = [];
+    
+        let movies = [];
+
         /**
          * Creates the pagination.
          */

@@ -25,121 +25,122 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
 /* global app */
 (function (app) {
-  var years = [];
-  var studios = [];
-  var producers = [];
-  /**
-   * Counts years with more winners.
-   * @param {Object} movie 
-   */
-
-  var yearWinnerCount = function yearWinnerCount(movie) {
-    /**
-     * Checks the year exists in array and count the winners.
-     * @param {Object} year 
-     * @returns year
-     */
-    var findYear = function findYear(year) {
-      if (year.year === movie.year) {
-        year.count += 1;
-        return year;
-      }
-    };
-
-    if (_typeof(years.find(findYear)) === (typeof undefined === "undefined" ? "undefined" : _typeof(undefined))) {
-      years.push({
-        year: movie.year,
-        count: 1
-      });
-    }
-  };
-  /**
-   * Counts studios with more winners.
-   * @param {Object} movie 
-   */
-
-
-  var studioWinnerCount = function studioWinnerCount(movie) {
-    /**
-     * Checks the studio exists in array and count the winners.
-     * @param {Object} studio 
-     * @returns studio
-     */
-    var findStudio = function findStudio(studio) {
-      if (movie.studios.indexOf(studio.name) >= 0) {
-        studio.count += 1;
-        return studio;
-      }
-    };
-    /**
-     * Adds the studio in array.
-     * @param {String} studio 
-     */
-
-
-    var eachStudio = function eachStudio(studio) {
-      studios.push({
-        name: studio.trim(),
-        count: 1
-      });
-    };
-
-    if (_typeof(studios.find(findStudio)) === (typeof undefined === "undefined" ? "undefined" : _typeof(undefined))) {
-      if (typeof movie.studios === 'string') {
-        movie.studios.split(',').forEach(eachStudio);
-      } else {
-        movie.studios.forEach(eachStudio);
-      }
-    }
-  };
-  /**
-   * Calculates each producer's winning interval.
-   * @param {Object} movie 
-   */
-
-
-  var producerWinnerInterval = function producerWinnerInterval(movie) {
-    /**
-     * Checks the producer exists in array, calculates the interval and defines the last year.
-     * @param {Object} producer 
-     * @returns producer
-     */
-    var findProducer = function findProducer(producer) {
-      if (movie.producers.indexOf(producer.name) >= 0) {
-        producer.interval = Number(movie.year) - Number(producer.yearFirst);
-        producer.yearLast = movie.year;
-        return producer;
-      }
-    };
-    /**
-     * Adds the producer in array.
-     * @param {String} producer 
-     */
-
-
-    var eachProducer = function eachProducer(producer) {
-      producers.push({
-        name: producer.trim(),
-        interval: 0,
-        yearFirst: movie.year,
-        yearLast: movie.year
-      });
-    };
-
-    if (_typeof(producers.find(findProducer)) === (typeof undefined === "undefined" ? "undefined" : _typeof(undefined))) {
-      if (typeof movie.producers === 'string') {
-        movie.producers.split(',').forEach(eachProducer);
-      } else {
-        movie.producers.forEach(eachProducer);
-      }
-    }
-  };
-
   app.controller('DashboardController', function ($scope, $route, $http) {
+    var years = [];
+    var studios = [];
+    var producers = [];
+    /**
+     * Counts years with more winners.
+     * @param {Object} movie 
+     */
+
+    var yearWinnerCount = function yearWinnerCount(movie) {
+      /**
+       * Checks the year exists in array and count the winners.
+       * @param {Object} year 
+       * @returns year
+       */
+      var findYear = function findYear(year) {
+        if (year.year === movie.year) {
+          year.count += 1;
+          return year;
+        }
+      };
+
+      if (_typeof(years.find(findYear)) === (typeof undefined === "undefined" ? "undefined" : _typeof(undefined))) {
+        years.push({
+          year: movie.year,
+          count: 1
+        });
+      }
+    };
+    /**
+     * Counts studios with more winners.
+     * @param {Object} movie 
+     */
+
+
+    var studioWinnerCount = function studioWinnerCount(movie) {
+      /**
+       * Checks the studio exists in array and count the winners.
+       * @param {Object} studio 
+       * @returns studio
+       */
+      var findStudio = function findStudio(studio) {
+        if (movie.studios.indexOf(studio.name) >= 0) {
+          studio.count += 1;
+          return studio;
+        }
+      };
+      /**
+       * Adds the studio in array.
+       * @param {String} studio 
+       */
+
+
+      var eachStudio = function eachStudio(studio) {
+        studios.push({
+          name: studio.trim(),
+          count: 1
+        });
+      };
+
+      if (_typeof(studios.find(findStudio)) === (typeof undefined === "undefined" ? "undefined" : _typeof(undefined))) {
+        if (typeof movie.studios === 'string') {
+          movie.studios.split(',').forEach(eachStudio);
+        } else {
+          movie.studios.forEach(eachStudio);
+        }
+      }
+    };
+    /**
+     * Calculates each producer's winning interval.
+     * @param {Object} movie 
+     */
+
+
+    var producerWinnerInterval = function producerWinnerInterval(movie) {
+      /**
+       * Checks the producer exists in array, calculates the interval and defines the last year.
+       * @param {Object} producer 
+       * @returns producer
+       */
+      var findProducer = function findProducer(producer) {
+        if (movie.producers.indexOf(producer.name) >= 0) {
+          producer.interval = Number(movie.year) - Number(producer.yearFirst);
+          producer.yearLast = movie.year;
+          return producer;
+        }
+      };
+      /**
+       * Adds the producer in array.
+       * @param {String} producer 
+       */
+
+
+      var eachProducer = function eachProducer(producer) {
+        producers.push({
+          name: producer.trim(),
+          interval: 0,
+          yearFirst: movie.year,
+          yearLast: movie.year
+        });
+      };
+
+      if (_typeof(producers.find(findProducer)) === (typeof undefined === "undefined" ? "undefined" : _typeof(undefined))) {
+        if (typeof movie.producers === 'string') {
+          movie.producers.split(',').forEach(eachProducer);
+        } else {
+          movie.producers.forEach(eachProducer);
+        }
+      }
+    };
     /**
      * Searchs movies by year.
      * @param {Event} e 
      */
+
+
     var searchByYear = function searchByYear(e) {
       e.preventDefault();
       $scope.search.result = $scope.movies.filter(function (m) {
@@ -215,12 +216,13 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
 /* global app */
 (function (app) {
-  var years = [];
-  var movies = [];
   app.controller('MoviesController', function ($scope, $http, $routeParams, $route) {
+    var years = [];
+    var movies = [];
     /**
      * Creates the pagination.
      */
+
     var pagination = function pagination() {
       var pagers = [];
       var limit = Math.ceil($scope.movies.length / $scope.pageSize);
