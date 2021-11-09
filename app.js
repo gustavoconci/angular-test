@@ -169,11 +169,17 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     $scope.producersLongest = {};
     $scope.producersShortest = {};
     $scope.movies = [];
-    $scope.search = {};
+    $scope.search = {}; // Used to ng-repeat years filter.
+
+    $scope.moreThanOne = function (item) {
+      return item.count > 1;
+    };
+
     $scope.searchByYear = searchByYear;
     $http.get('movies.json').then(function (data) {
       var movies = data.data;
-      $scope.movies = movies.filter(filterMovies); // Filters producers with interval above 0.
+      $scope.movies = movies.filter(filterMovies);
+      $scope.years = years; // Filters producers with interval above 0.
 
       producers = producers.filter(function (p) {
         return p.interval > 0;
@@ -181,10 +187,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
       producers.sort(function (a, b) {
         return (a.interval < b.interval) - (a.interval > b.interval);
-      }); // Filters years with count above 1.
-
-      $scope.years = years.filter(function (item) {
-        return item.count > 1;
       }); // Sorts studios in descending order by count.
 
       $scope.studios = studios.sort(function (a, b) {

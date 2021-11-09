@@ -146,6 +146,9 @@
         $scope.movies = [];
         $scope.search = {};
 
+        // Used to ng-repeat years filter.
+        $scope.moreThanOne = (item) => item.count > 1;
+
         $scope.searchByYear = searchByYear;
 
         $http.get('movies.json').then((data) => {
@@ -153,13 +156,12 @@
 
             $scope.movies = movies.filter(filterMovies);
 
+            $scope.years = years;
+
             // Filters producers with interval above 0.
             producers = producers.filter((p) => (p.interval > 0));
             // Sorts producers in descending order by interval.
             producers.sort((a, b) => (a.interval < b.interval) - (a.interval > b.interval));
-
-            // Filters years with count above 1.
-            $scope.years = years.filter((item) => item.count > 1);
 
             // Sorts studios in descending order by count.
             $scope.studios = studios.sort((a, b) => (a.count < b.count) - (a.count > b.count)).slice(0, 3);
