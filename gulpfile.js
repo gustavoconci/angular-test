@@ -22,7 +22,7 @@ const assetsPathDest = pathDest + 'assets/';
 const browserSyncParams = {
     open: false,
     injectChanges: true,
-    proxy: process.cwd().replace('/var/www', 'localhost'),
+    proxy: process.cwd().replace('/var/www', 'localhost'), // root folder
     notify: false
 };
 
