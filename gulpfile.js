@@ -15,6 +15,7 @@ const browserSync = require('browser-sync').create();
 const pathSrc = './src/';
 const pathDest = './';
 const appPathSrc = pathSrc + 'app/';
+const testPathSrc = pathSrc + 'test/';
 const assetsPathSrc = pathSrc + 'assets/';
 const assetsPathDest = pathDest + 'assets/';
 
@@ -78,11 +79,30 @@ var app = {
     }
 };
 
+// Test tasks
+var test = {
+    js: function () {
+        return gulp
+            .src([
+                testPathSrc + '**/*.js',
+            ])
+            .pipe(eslint())
+            .pipe(babel({
+                presets: ['@babel/preset-env']
+            }))
+            .pipe(concat('test.js'))
+            .pipe(gulp.dest(pathDest))
+            .pipe(eslint.format())
+            .pipe(browserSync.stream());
+    }
+};
+
 // Watch files
 function watchFiles() {
     browserSync.init(browserSyncParams);
 
     gulp.watch(appPathSrc + '**/*', app.js);
+    gulp.watch(testPathSrc + '**/*', test.js);
 
     gulp.watch(assetsPathSrc + 'css/**/*', assets.css);
     gulp.watch(assetsPathSrc + 'js/**/*', assets.js);
@@ -95,7 +115,7 @@ function watchFiles() {
 // define complex tasks
 const assetsBuild = gulp.parallel(assets.css, assets.js);
 const build = gulp.series(app.js, assetsBuild);
-const watch = gulp.series(app.js, assetsBuild, watchFiles);
+const watch = gulp.series(app.js, test.js, assetsBuild, watchFiles);
 
 // export tasks
 exports.build = build;

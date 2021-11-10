@@ -25,7 +25,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
 /* global app */
 (function (app) {
-  app.controller('DashboardController', function ($scope, $route, $http) {
+  app.controller('DashboardController', function ($scope, $http) {
     var years = [];
     var studios = [];
     var producers = [];
@@ -166,7 +166,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     $scope.id = 'dashboard';
     $scope.years = [];
     $scope.studios = [];
-    $scope.producers = [];
     $scope.producersLongest = {};
     $scope.producersShortest = {};
     $scope.movies = [];
@@ -177,7 +176,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     };
 
     $scope.searchByYear = searchByYear;
-    $http.get('movies.json').then(function (data) {
+    $scope.http = $http.get('movies.json').then(function (data) {
       var movies = data.data;
       $scope.movies = movies.filter(filterMovies);
       $scope.years = years; // Filters producers with interval above 0.
@@ -187,11 +186,11 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       }); // Sorts producers in descending order by interval.
 
       producers.sort(function (a, b) {
-        return (a.interval < b.interval) - (a.interval > b.interval);
+        return a.interval < b.interval ? 1 : -1;
       }); // Sorts studios in descending order by count.
 
       $scope.studios = studios.sort(function (a, b) {
-        return (a.count < b.count) - (a.count > b.count);
+        return a.count < b.count ? 1 : -1;
       }).slice(0, 3); // Get the longest producer.
 
       $scope.producersLongest = producers[0]; // Get the shortest producer.
@@ -305,7 +304,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     delete $scope.filter.pager;
     $scope.paginate = paginate;
     $scope.filterBy = filterBy;
-    $http.get('movies.json').then(function (data) {
+    $scope.http = $http.get('movies.json').then(function (data) {
       movies = data.data;
       $scope.movies = movies; // Used to filter by year.
 

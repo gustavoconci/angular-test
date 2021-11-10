@@ -89,7 +89,7 @@
         $scope.paginate = paginate;
         $scope.filterBy = filterBy;
 
-        $http.get('movies.json').then((data) => {
+        $scope.http = $http.get('movies.json').then((data) => {
             movies = data.data;
 
             $scope.movies = movies;

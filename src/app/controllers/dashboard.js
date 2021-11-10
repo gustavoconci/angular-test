@@ -1,7 +1,7 @@
 /* global app */
 
 ((app) => {
-    app.controller('DashboardController', ($scope, $route, $http) => {
+    app.controller('DashboardController', ($scope, $http) => {
         const years = [];
         const studios = [];
     
@@ -140,7 +140,6 @@
         $scope.id = 'dashboard';
         $scope.years = [];
         $scope.studios = [];
-        $scope.producers = [];
         $scope.producersLongest = {};
         $scope.producersShortest = {};
         $scope.movies = [];
@@ -151,7 +150,7 @@
 
         $scope.searchByYear = searchByYear;
 
-        $http.get('movies.json').then((data) => {
+        $scope.http = $http.get('movies.json').then((data) => {
             const movies = data.data;
 
             $scope.movies = movies.filter(filterMovies);
@@ -161,10 +160,10 @@
             // Filters producers with interval above 0.
             producers = producers.filter((p) => (p.interval > 0));
             // Sorts producers in descending order by interval.
-            producers.sort((a, b) => (a.interval < b.interval) - (a.interval > b.interval));
+            producers.sort((a, b) => (a.interval < b.interval) ? 1 : -1);
 
             // Sorts studios in descending order by count.
-            $scope.studios = studios.sort((a, b) => (a.count < b.count) - (a.count > b.count)).slice(0, 3);
+            $scope.studios = studios.sort((a, b) => (a.count < b.count) ? 1 : -1).slice(0, 3);
 
             // Get the longest producer.
             $scope.producersLongest = producers[0];
